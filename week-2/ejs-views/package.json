@@ -1,0 +1,12 @@
+{
+  "name": "ejs-views",
+  "author": "Nathaniel Liebhart",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node liebhart-assignment-2.4"
+  },
+  "dependencies": {
+    "ejs": "2.6.2",
+    "express": "4.17.1"
+  }
+}
