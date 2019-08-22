@@ -1,0 +1,11 @@
+{
+  "name": "advanced-routing",
+  "author": "Nathaniel Liebhart",
+  "private": false,
+  "version": "0.0.1",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
+  }
+}
