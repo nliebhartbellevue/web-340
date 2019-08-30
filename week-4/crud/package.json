@@ -1,0 +1,15 @@
+{
+  "name": "crud",
+  "author": "Nathaniel Liebhart",
+  "private": false,
+  "version": "0.0.1",
+  "scripts": {
+    "start": "nodemon liebhart-assignment-4.4.js"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
