@@ -1,0 +1,9 @@
+{
+  "name": "json-api",
+  "author": "Nathaniel Liebhart",
+  "private": false,
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
