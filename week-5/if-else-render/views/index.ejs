@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>if...else...render</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <dic class="container">
+      <div class="row">
+        <div class="col-md-6 offset-3">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">
+                Names List
+              </h3>
+              <ul>
+                <% if (names.length > 0) { %> <% for (var i = 0; i <
+                names.length; i++) { %>
+
+                <li><%= names[i] %></li>
+
+                <% } %> <% } %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dic>
+  </body>
+</html>
