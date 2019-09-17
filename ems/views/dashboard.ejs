@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EMS</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/dashboard.css" />
+    <link rel="shortcut icon" type="image/png" href="Icon.png" />
+  </head>
+
+  <body>
+    <nav class="navbar has-shadow">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            <img src="Icon.png" alt="icon" height="500px" />
+          </a>
+
+          <div class="navbar-burger burger" data-target="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div id="navMenu" class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item has-dropdown">
+              <a class="navbar-link account">
+                Account
+              </a>
+
+              <div class="navbar-dropdown">
+                <a href="/<%= user._id %>/logout" class="navbar-item">
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="columns is-centered content" id="contact-app">
+      <!-- Left contacts column -->
+      <div class="column is-3" id="contact-list">
+        <!-- Search bar and add button -->
+        <div class="field is-grouped">
+          <div class="control is-expanded">
+            <input
+              class="input search"
+              type="text"
+              placeholder="Search"
+              v-on:input="search()"
+            />
+          </div>
+          <div class="control">
+            <button
+              class="button is-light addButton"
+              onclick="openContactModal()"
+            >
+              <span class="icon is-small">
+                <i class="fa fa-plus"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- List of contacts -->
+        <div class="list-container">
+          <div class="list-contacts" id="list-contacts">
+            <div
+              v-for="(contact, index) in contacts"
+              onclick="showContact()"
+              class="card"
+              v-bind:id="'contact-card-'+index"
+              v-on:click="showContact(contact,index)"
+              v-bind:data-preview-id="index"
+            >
+              <div class="card-content">
+                <div class="row">
+                  <strong id="fake-subject-1">{{ contact.fullName }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selected contact column -->
+      <div class="column is-6 contact" id="contact-pane">
+        <div
+          class="no-contact-view is-centered has-text-centered is-lig"
+          style="width:100%;"
+        >
+          <i class="fa fa-user"></i>
+          <!-- <div class="subtitle">
+                    You don't have any contacts, yet.
+                </div> -->
+        </div>
+        <div class="contact-view is-hidden">
+          <div class="full-name subtitle is-1">Abe Sanchez</div>
+          <hr />
+          <div class="content">
+            <div class="field">
+              <label class="label">First Name</label>
+              <div class="subtitle first-name is-3">Abe</div>
+            </div>
+
+            <div class="field">
+              <label class="label">Last Name</label>
+              <p class="subtitle last-name is-3">Sanchez</p>
+            </div>
+
+            <div class="field">
+              <label class="label">Company</label>
+              <p class="subtitle company is-3">Microsoft</p>
+            </div>
+
+            <div class="field">
+              <label class="label">Mobile Phone</label>
+              <p class="subtitle mobile-phone is-3">407-394-7548</p>
+            </div>
+
+            <div class="field">
+              <label class="label">Home Phone</label>
+              <p class="subtitle home-phone is-3">N/A</p>
+            </div>
+
+            <div class="field">
+              <label class="label">Email</label>
+              <p class="subtitle email is-3">abe@knights.ucf.edu</p>
+            </div>
+
+            <div class="field is-grouped">
+              <div class="control">
+                <button class="button is-danger" v-on:click="deleteContact()">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add contact modal -->
+        <div class="modal contactModal">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <section class="modal-card-body contact-modal">
+              <div class="field">
+                <label class="label">First Name</label>
+                <div class="control">
+                  <input
+                    id="first-name"
+                    class="input first-name-input"
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Last Name</label>
+                <div class="control">
+                  <input
+                    class="input last-name-input"
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastName"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Company</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input
+                    class="input company-input"
+                    type="text"
+                    placeholder="Company"
+                    name="company"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-suitcase"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Mobile Phone</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input
+                    class="input mobile-phone-input"
+                    type="text"
+                    placeholder="Mobile Phone"
+                    name="mobilePhone"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-phone"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Home Phone</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input
+                    class="input home-phone-input"
+                    type="text"
+                    placeholder="Home Phone"
+                    name="homePhone"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-home"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input
+                    class="input email-input"
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field is-grouped">
+                <div class="control">
+                  <button
+                    class="button is-light"
+                    onclick="submitContact()"
+                    v-on:click="addContact()"
+                  >
+                    Submit
+                  </button>
+                </div>
+                <div class="control">
+                  <button
+                    class="button is-danger"
+                    onclick="closeContactModal()"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"
+      integrity="sha256-QHdJObhDO++VITP6S4tMlDHRWMaUOk+s/xWIRgF/YY0="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"
+      integrity="sha256-4PIvl58L9q7iwjT654TQJM+C/acEyoG738iL8B8nhXg="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function openContactModal() {
+          var modal = document.querySelector('.contactModal');
+          clearContactModal();
+          modal.classList.toggle('is-active');
+      }
+      function closeContactModal() {
+          var modal = document.querySelector('.contactModal');
+          modal.classList.toggle('is-active');
+      }
+      function fillContactModal() {
+          $('.first-name-input').val( $('.first-name').text() );
+          $('.last-name-input').val( $('.last-name').text() );
+          $('.mobile-phone-input').val( $('.mobile-phone').text() );
+          $('.home-phone-input').val( $('.home-phone').text() );
+          $('.company-input').val( $('.company').text() );
+          $('.email-input').val( $('.email').text() );
+      }
+      function clearContactModal() {
+          $('.first-name-input').val( '' );
+          $('.last-name-input').val( '' );
+          $('.mobile-phone-input').val( '' );
+          $('.home-phone-input').val( '' );
+          $('.company-input').val( '' );
+          $('.email-input').val( '' );
+      }
+      function showContact() {
+          var noContactView = document.querySelector('.no-contact-view');
+          noContactView.classList.add('is-hidden');
+          var contactView = document.querySelector('.contact-view');
+          contactView.classList.remove('is-hidden');
+      }
+      function submitContact() {
+          closeContactModal();
+      }
+      function compare(a, b) {
+          if (a.fullName.toLowerCase() < b.fullName.toLowerCase())
+              return -1;
+          if (a.fullName.toLowerCase() > b.fullName.toLowerCase())
+              return 1;
+          return 0;
+      }
+      var contactList = <%- contactList %>;
+      var user = <%- JSON.stringify(user) %>;
+      contactList.sort(compare);
+      $(document).ready(function() {
+          var burger = document.querySelector('.burger');
+          var menu = document.querySelector('#'+burger.dataset.target);
+          var nav = document.querySelector('.account');
+          var navList = document.querySelector("#"+nav.dataset.target);
+          burger.addEventListener('click', function() {
+              burger.classList.toggle('is-active');
+              menu.classList.toggle('is-active');
+          });
+          nav.addEventListener('click', function() {
+              nav.parentElement.classList.toggle('is-active');
+          });
+          vue = new Vue({
+              el: '#contact-app',
+              data: {
+                  contacts: contactList,
+                  activeContact: null
+              },
+              methods: {
+                  showContact: function(contact, index) {
+                      $('#contact-pane').removeClass('is-hidden');
+                      $('.card').removeClass('active');
+                      $('#contact-card-' + index).addClass('active');
+                      $('.contact .full-name').text(contact.fullName);
+                      $('.contact .first-name').text(contact.firstName);
+                      $('.contact .last-name').text(contact.lastName);
+                      $('.contact .mobile-phone').text(contact.mobilePhone);
+                      $('.contact .home-phone').text(contact.homePhone);
+                      $('.contact .company').text(contact.company);
+                      $('.contact .email').text(contact.email);
+                      this.activeContact = contact;
+                  },
+                  deleteContact: function() {
+                      var deleteObject = { contactID: this.activeContact._id };
+                      $('.card').removeClass('active');
+                      $.ajax({
+                          type: "POST",
+                          url: "/<%- user._id %>/deletecontact",
+                          data: deleteObject,
+                          dataType: "json"
+                      });
+
+                      this.contacts.splice(this.contacts.indexOf(this.activeContact), 1);
+                      document.querySelector('.no-contact-view').classList.remove('is-hidden');
+                      document.querySelector('.contact-view').classList.add('is-hidden');
+                  },
+                  addContact: function () {
+                      var contactToAdd = {
+                          fullName: $('.first-name-input').val() + " " + $('.last-name-input').val(),
+                          firstName: $('.first-name-input').val(),
+                          lastName: $('.last-name-input').val(),
+                          mobilePhone: $('.mobile-phone-input').val(),
+                          homePhone: $('.home-phone-input').val(),
+                          company: $('.company-input').val(),
+                          email: $('.email-input').val()
+                      };
+                      var self = this;
+                      $.ajax({
+                          type: "POST",
+                          url: "/<%- user._id %>/addcontact",
+                          data: contactToAdd,
+                          dataType: "json",
+                          success: function(data) {
+                              contactToAdd._id = data;
+                              self.contacts.push(contactToAdd);
+                              self.contacts.sort(compare);
+                              self.activeContact = contactToAdd;
+                              self.showContact(contactToAdd, self.contacts.indexOf(contactToAdd));
+                          }
+                      });
+                  },
+                  search: function() {
+                      var input = $('.search').val();
+                      var queryObject = { query: input };
+                      var self = this;
+                      $.ajax({
+                          type: "POST",
+                          url: "/<%- user._id %>/searchcontact",
+                          data: queryObject,
+                          dataType: "json",
+                          success: function(data) {
+                              self.contacts = data;
+                              self.contacts.sort(compare);
+                          }
+                      });
+                  }
+              }
+          });
+      });
+    </script>
+  </body>
+</html>
