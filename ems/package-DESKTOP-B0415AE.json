@@ -1,0 +1,33 @@
+{
+  "name": "ems",
+  "version": "1.0.0",
+  "description": "Employee Management System - for WEB 340 Nodejs at Bellevue University",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "Nathaniel Liebhart",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nliebhartbellevue/web-340/issues"
+  },
+  "homepage": "https://github.com/nliebhartbellevue.web-340#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "express-message": "^1.0.1",
+    "express-session": "^1.16.2",
+    "express-validator": "^3.2.0",
+    "mongoose": "^5.7.1",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
