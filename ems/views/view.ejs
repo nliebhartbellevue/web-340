@@ -1,24 +1,37 @@
 <%- include("partials/header") %> <%- include("partials/navbar") %>
 
 <div class="container">
-  <h1>John Doe</h1>
+  <h1><%= employee.fName %> <%= employee.lName %></h1>
   <hr />
   <h3>Phone Numbers</h3>
   <ul class="list-group">
-    <label for="work">Work</label>
-    <li id="workPhone" class="list-group-item mb-2">555-555-5555</li>
-    <label for="mobile">Mobile</label>
-    <li id="mobilePhone" class="list-group-item mb-2">555-555-5555</li>
-    <label for="home">Home</label>
-    <li id="homePhone" class="list-group-item mb-2">555-555-5555</li>
+    <label for="workPhone">Work</label>
+    <li class="list-group-item mb-2" id="workPhone">
+      <% if(employee.phone[0]) {%> <%= employee.phone[0] %> <%} else {%> "This
+      employee has no Work Phone number on file!" <% } %>
+    </li>
+    <label for="mobilePhone">Mobile</label>
+    <li class="list-group-item mb-2" id="mobilePhone">
+      <% if(employee.phone[1]) {%> <%= employee.phone[1] %> <%} else {%> "This
+      employee has no Mobile Phone number on file!" <% } %>
+    </li>
+    <label for="homePhone">Home</label>
+    <li class="list-group-item mb-2" id="homePhone">
+      <% if(employee.phone[2]) {%> <%= employee.phone[2] %> <%} else {%> "This
+      employee has no Home Phone number on file!" <% } %>
+    </li>
   </ul>
   <hr />
   <h3>Email Address</h3>
-  <span class="lead">jdoe@email.test</span>
+  <span class="lead"><%= employee.email %></span>
   <hr />
   <div class="btn-group">
-    <a href="#" class="btn btn-info">Edit Employee</a>
-    <a href="#" class="btn btn-danger">Delete Employee</a>
+    <a href="/employees/edit/<%= employee._id %>" class="btn btn-info">
+      Edit Employee
+    </a>
+    <a href="#" class="btn btn-danger" data-id="<%= employee._id %>"
+      >Delete Employee</a
+    >
   </div>
 </div>
 

@@ -3,7 +3,7 @@
 <div class="container">
   <h1 class="md-3">Add a New Employee</h1>
   <br />
-  <form action="" method="POST">
+  <form action="/employees/new" method="POST">
     <h3>Employee</h3>
     <div class="input-group md-3">
       <div class="input-group-prepend">
@@ -36,7 +36,7 @@
       <label for="email">Email Address:</label>
       <input type="email" name="email" class="form-control" />
     </div>
-
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <input type="submit" value="ADD" class="btn btn-success" />
   </form>
 </div>

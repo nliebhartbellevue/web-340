@@ -1,7 +1,12 @@
-let mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 // Employee Schema
-let employeeSchema = mongoose.Schema({
+const EmployeeSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
   fName: {
     type: String,
     required: true
@@ -22,4 +27,4 @@ let employeeSchema = mongoose.Schema({
   }
 });
 
-let Employee = (module.exports = mongoose.model("Employee", employeeSchema));
+module.exports = Employee = mongoose.model("Employee", EmployeeSchema);

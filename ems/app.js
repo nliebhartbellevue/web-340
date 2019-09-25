@@ -1,17 +1,30 @@
+/**
+ * Title: app.js
+ * Author: Nathaniel Liebhart
+ * Date: September 24, 2019
+ * Description: Server file for ems application
+ */
+
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const csrf = require("csurf");
 const logger = require("morgan");
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 const expressValidator = require("express-validator");
 const flash = require("connect-flash");
 const session = require("express-session");
+const passport = require("passport");
+const config = require("./config/database");
 
 // Connect to MongoDB by way of Mongoose
-mongoose.connect("mongodb://dbAdmin:Password1@ds139939.mlab.com:39939/ems-db", {
+mongoose.connect(config.database, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
 let db = mongoose.connection;
 
 // Check connection to mLab
@@ -24,14 +37,38 @@ db.on("error", err => {
   console.error(err);
 });
 
+// Set-up CSRF protection
+let csrfProtection = csrf({ cookie: true });
+
 // Init Express App
 const app = express();
 
 let Employee = require("./models/employee");
 
-// Body Parser middleware
+/**
+ * Body Parser Middleware
+ * parse application/x-www-form-urlencoded
+ */
 app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
 app.use(bodyParser.json());
+
+// Cookie Parser middleware
+app.use(cookieParser());
+
+// Helmet middleware
+app.use(helmet.xssFilter());
+
+// CSRF protection middleware
+app.use(csrfProtection);
+
+// Inspect all incoming request and add a CSRF token to the response
+app.use((req, res, next) => {
+  var token = req.csrfToken();
+  res.cookie("XSRF-TOKEN", token);
+  res.locals.csrfToken = token;
+  next();
+});
 
 // Set Express to get views from views folder and use ejs as view engine
 app.set("views", path.join(__dirname, "views"));
@@ -78,35 +115,69 @@ app.use(
   })
 );
 
-// Landing page route
+// Set PORT variable
+app.set("port", process.env.PORT || 8080);
+
+// Passport Config
+require("./config/passport")(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Auth guard route
+app.get("*", (req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
+/**
+ * Description: Redirects users to Home page
+ * Type: GET
+ * Request: n/a
+ * Response: index.ejs
+ * URL: localhost:8080
+ */
 app.get("/", (req, res) => {
-  res.render("index", {
-    title: "Home page"
+  Employee.find({}, (err, employees) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.render("index", {
+        title: "EMS | Employees",
+        employees
+      });
+    }
   });
 });
 
-// GET: List all Employees
-app.get("/employees", (req, res) => {
-  res.render("list", {
-    title: "Employee List"
-  });
-});
+// Route files
+let employees = require("./routes/employees");
+let users = require("./routes/users");
+app.use("/employees", employees);
+app.use("/users", users);
 
-// POST: Add Ne Employee
-app.get("/employees/new", (req, res) => {
-  res.render("new", {
-    title: "Add New Employee"
-  });
-});
+// // GET: List all Employees
+// app.get("/employees", (req, res) => {
+//   res.render("list", {
+//     title: "Employee List"
+//   });
+// });
 
-// GET: View an Employee by id
-app.get("/employee/:id", (req, res) => {
-  res.render("view", {
-    title: `Employee Details for first-name last-name`
-  });
-});
+// // POST: Add Ne Employee
+// app.get("/employees/new", (req, res) => {
+//   res.render("new", {
+//     title: "Add New Employee"
+//   });
+// });
+
+// // GET: View an Employee by id
+// app.get("/employee/:id", (req, res) => {
+//   res.render("view", {
+//     title: `Employee Details for first-name last-name`
+//   });
+// });
 
 // Start Express server
-app.listen(8080, () => {
-  console.log("Express server is running on port 8080!");
+app.listen(app.get("port"), () => {
+  console.log(`Express server is running on ${app.get("port")}`);
 });

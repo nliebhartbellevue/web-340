@@ -14,9 +14,22 @@
       support to keep you going.
     </p>
     <p class="lead">
-      <a href="#" role="button" class="btn btn-primary btn-lg">Get Started</a>
+      <a href="/employees/new" role="button" class="btn btn-primary btn-lg"
+        >Get Started</a
+      >
     </p>
   </div>
+</div>
+<div class="container">
+  <ul class="list-group">
+    <% employees.forEach((employee) => {%>
+    <li class="list-group-item">
+      <a href="/employees/<%= employee._id %>">
+        <%= employee.fName %> <%= employee.lName %>
+      </a>
+    </li>
+    <% }); %>
+  </ul>
 </div>
 
 <%- include("partials/footer") %> <%- include("partials/scripts") %>
