@@ -49,7 +49,7 @@ let Employee = require("./models/employee");
  * Body Parser Middleware
  * parse application/x-www-form-urlencoded
  */
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
