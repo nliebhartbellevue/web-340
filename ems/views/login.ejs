@@ -11,6 +11,13 @@
       <label for="password">Password:</label>
       <input type="password" name="password" class="form-control" />
     </div>
+    <span class="lead"
+      >Use
+      <mark style="background: blue;color:white;font-weight: bold;"
+        ><%= uname %> & <%= pass %></mark
+      >to login!</span
+    >
+    <br />
     <br />
     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <input type="submit" value="Submit" class="btn btn-primary" />

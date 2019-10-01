@@ -78,7 +78,9 @@ router.post("/register", (req, res) => {
 // Login Form
 router.get("/login", (req, res) => {
   res.render("login", {
-    title: "Login to EMS"
+    title: "Login to EMS",
+    uname: "jdoe",
+    pass: "password"
   });
 });
 
