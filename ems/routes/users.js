@@ -1,3 +1,10 @@
+/**
+ * Title: users.js
+ * Author: Nathaniel Liebhart
+ * Date: September 30, 2019
+ * Description: This page acts as the routing and business logic for the user routes and model
+ */
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");

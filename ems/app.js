@@ -82,7 +82,7 @@ app.use(logger("short"));
 // Express Session middleware
 app.use(
   session({
-    secret: "a very secret passphrase",
+    secret: config.secret,
     resave: true,
     saveUninitialized: true
   })

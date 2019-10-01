@@ -1,3 +1,10 @@
+/**
+ * Title: passport.js
+ * Author: Nathaniel Liebhart
+ * Date: September 30, 2019
+ * Description: This file is used to configure the passport Local Strategy
+ */
+
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/user");
 const config = require("../config/database");

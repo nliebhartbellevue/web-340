@@ -1,3 +1,10 @@
+/**
+ * Title: user.js
+ * Author: Nathaniel Liebhart
+ * Date September 30, 2019
+ * Description: This is the model and mongoose schema for a User record
+ */
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 

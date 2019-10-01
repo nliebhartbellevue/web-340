@@ -1,3 +1,10 @@
+/**
+ * Title: employees.js
+ * Author: Nathaniel Liebhart
+ * Date: September 30, 2019
+ * Description: This page acts as the routing and business logic for the employee routes and model
+ */
+
 const express = require("express");
 const router = express.Router();
 
