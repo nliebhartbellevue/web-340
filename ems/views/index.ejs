@@ -20,16 +20,6 @@
     </p>
   </div>
 </div>
-<div class="container">
-  <ul class="list-group">
-    <% employees.forEach((employee) => {%>
-    <li class="list-group-item">
-      <a href="/employees/<%= employee._id %>">
-        <%= employee.fName %> <%= employee.lName %>
-      </a>
-    </li>
-    <% }); %>
-  </ul>
-</div>
 
-<%- include("partials/footer") %> <%- include("partials/scripts") %>
+<%- include("list") %> <%- include("partials/footer") %> <%-
+include("partials/scripts") %>

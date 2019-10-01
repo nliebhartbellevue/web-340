@@ -139,14 +139,17 @@ app.get("*", (req, res, next) => {
  */
 app.get("/", (req, res) => {
   Employee.find({}, (err, employees) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.render("index", {
-        title: "EMS | Employees",
-        employees
-      });
-    }
+    User.findById(employees.user, (err, user) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("index", {
+          title: "EMS | Employees",
+          employees,
+          user
+        });
+      }
+    });
   });
 });
 
