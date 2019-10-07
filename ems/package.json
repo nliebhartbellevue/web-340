@@ -8,8 +8,7 @@
     "start": "node app.js"
   },
   "engines": {
-    "node": "10.16.0",
-    "npm": "6.9.0"
+    "node": "10.16.0"
   },
   "keywords": [],
   "author": "Nathaniel Liebhart",
