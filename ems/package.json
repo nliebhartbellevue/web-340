@@ -4,7 +4,8 @@
   "description": "Employee Management System - for WEB 340 Nodejs at Bellevue University",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "Nathaniel Liebhart",
@@ -14,21 +15,15 @@
   },
   "homepage": "https://github.com/nliebhartbellevue.web-340#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
     "csurf": "^1.10.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
-    "express-messages": "^1.0.1",
     "express-session": "^1.16.2",
-    "express-validator": "^3.2.0",
     "helmet": "^3.21.1",
     "mongoose": "^5.7.1",
-    "morgan": "^1.9.1",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
