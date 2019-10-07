@@ -10,17 +10,13 @@ const Schema = mongoose.Schema;
 
 // Employee Schema
 const EmployeeSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  },
   fName: {
     type: String,
     required: true
   },
   lName: {
     type: String,
-    default: "Last Name"
+    required: true
   },
   phone: {
     type: Array
