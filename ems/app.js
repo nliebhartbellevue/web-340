@@ -22,7 +22,6 @@ const Employee = require("./models/employee");
  */
 const mongoDB = config.database;
 mongoose.connect(mongoDB, {
-  useMongoClient: true,
   useUnifiedTopology: true,
   useNewUrlParser: true
 });
@@ -57,6 +56,10 @@ app.use(helmet.xssFilter());
 
 // CSRF protection
 app.use(csrfProtection);
+
+// Set assets path and use for static files
+let assets = path.resolve(__dirname, "assets");
+app.use("/assets", express.static(assets));
 
 /**
  * Set up CSRF protection to intercept all incoming request
@@ -101,8 +104,8 @@ app.get("/", (req, res) => {
 });
 
 // Route files
-let employees = require("./routes/employees");
-app.use("/employees", employees);
+let routes = require("./routes/employees");
+app.use(routes);
 
 // Start Express server
 app.listen(app.get("port"), () => {

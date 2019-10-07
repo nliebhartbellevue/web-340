@@ -68,100 +68,53 @@ router.post("/process", (req, res) => {
 /**
  * Description: Redirects users to the home page
  * Type: GET
- * Request: query
+ * Request: _id
  * Response: view.ejs, Employee[] | index.ejs
- * URL: localhost:8080/view/:query
+ * URL: localhost:8080/view/:id
  */
-router.get("/view/:query", (req, res) => {
-  const query = req.params["query"];
-
-  Employee.find({ name: query }, (err, employees) => {
+router.get("/view/:id", (req, res) => {
+  Employee.findById(req.params.id, (err, employee) => {
     if (err) {
       console.log(err);
       throw err;
     } else {
-      console.log(employees);
+      console.log(employee);
 
-      if (employees.length > 0) {
-        res.render("view", {
-          title: "EMS | View",
-          employee: employees
-        });
-      } else {
-        res.redirect("/");
-      }
+      res.render("view", {
+        title: `EMS | View | ${employee.fName} ${employee.lName}`,
+        employee
+      });
     }
   });
 });
 
-// Load Edit Form
-// router.get("/edit/:id", ensureAuthenticated, (req, res) => {
-//   Employee.findById(req.params.id, (err, employee) => {
-//     if (employee.user != req.user._id) {
-//       req.flash("danger", "Not Authorized!");
-//       res.redirect("/");
-//     }
-//     res.render("edit", {
-//       title: `Edit ${employee.fName} ${employee.lName}`,
-//       employee
-//     });
-//   });
-// });
+/**
+ * Description: Updates the Employee record
+ * Type: POST
+ * Request: fName, lName, phone, email
+ * Response: index.ejs
+ * URL: localhost:8080/edit/:id
+ */
+router.post("/edit/:id", (req, res) => {
+  // Create a temp employee object
+  let employee = {};
+  employee.fName = req.body.fName;
+  employee.lName = req.body.lName;
+  employee.phone = [req.body.work, req.body.mobile, req.body.home];
+  employee.email = req.body.email;
 
-// Update Employee Process
-// router.post("/edit/:id", (req, res) => {
-//   let employee = {};
-//   employee.fName = req.body.fName;
-//   employee.lName = req.body.lName;
-//   employee.phone = [req.body.work, req.body.mobile, req.body.home];
-//   employee.email = req.body.email;
+  // set query equal to _id
+  let query = { _id: req.params.id };
 
-//   let query = { _id: req.params.id };
-
-//   Employee.update(query, employee, err => {
-//     if (err) {
-//       console.error(err);
-//       return;
-//     } else {
-//       req.flash("success", "Employee updated!");
-//       req.redirect("/");
-//     }
-//   });
-// });
-
-// Delete Employee
-// router.delete("/:id", (req, res) => {
-//   if (!req.user._id) {
-//     res.status(500).send();
-//     console.log("Bad User ID!");
-//   }
-
-//   let query = { _id: req.params.id };
-
-//   Employee.findById(req.params.id, (err, employee) => {
-//     if (employee.user != req.user._id) {
-//       res.status(500).send();
-//     } else {
-//       Employee.remove(query, err => {
-//         if (err) {
-//           console.error(err);
-//         }
-//         res.send("Success");
-//       });
-//     }
-//   });
-// });
-
-// Get Single Employee
-// router.get("/:id", (req, res) => {
-//   Employee.findById(req.params.id, (err, employee) => {
-//     User.findById(employee.user, (err, user) => {
-//       res.render("view", {
-//         title: `${employee.fName} ${employee.lName}`,
-//         employee
-//       });
-//     });
-//   });
-// });
+  // use mongoose to find employee record and update
+  Employee.update(query, employee, err => {
+    if (err) {
+      console.log(err);
+      throw err;
+    } else {
+      res.redirect("/");
+    }
+  });
+});
 
 module.exports = router;
