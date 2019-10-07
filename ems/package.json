@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "Nathaniel Liebhart",
   "license": "MIT",
+  "engines": {
+    "node": "10.16.0"
+  },
   "bugs": {
     "url": "https://github.com/nliebhartbellevue/web-340/issues"
   },
