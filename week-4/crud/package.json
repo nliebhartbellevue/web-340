@@ -7,7 +7,7 @@
     "start": "nodemon liebhart-assignment-4.4.js"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
